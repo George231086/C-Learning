@@ -26,7 +26,7 @@ namespace AnagramGame
 
         public void playGame()
         {
-            string loc = "wordsEn.txt";
+            string loc = "wordsEn.txt"; // Path to text file containing words for game. Assuming words are on separate lines.
             List<string> words = new List<string>();
             try
             {
