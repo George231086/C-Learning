@@ -26,7 +26,7 @@ namespace AnagramGame
 
         public void playGame()
         {
-            string loc = "C:\\Users\\George\\Desktop\\wordsEn.txt";
+            string loc = "wordsEn.txt";
             List<string> words = new List<string>();
             try
             {
