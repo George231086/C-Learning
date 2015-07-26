@@ -33,7 +33,7 @@ namespace AnagramGame
             {
                 words = getWordList(loc);
             }
-            catch (FileNotFoundException e)
+            catch (IOException e)
             {
                 Console.WriteLine("Could not find word list.");
                 Environment.Exit(1);
