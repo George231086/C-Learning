@@ -12,7 +12,9 @@ namespace AnagramGame
 
         public static void modHeapsAlgo(int n, char[] word, ref int permNo, ref string anagram)
         {
-            if (n == 1)
+            if (permNo == 0)
+                return;
+            else if (n == 1)
             {
                 permNo--;
                 if (permNo == 0)
@@ -23,7 +25,6 @@ namespace AnagramGame
                         wordStr += c;
                     }
                     anagram = wordStr;
-                    return;
                 }
 
             }
@@ -63,13 +64,13 @@ namespace AnagramGame
         public string[] getAnagram(string s)
         {
             int wordLength = s.Length;
-            int i1 ;
-            if (wordLength <= 6)
-                i1 = factorial(wordLength)/4;
+            int i1;
+            if (wordLength <= 7)
+                i1 = factorial(wordLength) / 4;
             else
-                i1 = factorial(6)/4;
-            int i2 = 3*i1;
-            
+                i1 = factorial(7) / 4;
+            int i2 = 3 * i1;
+
             Random r = new Random();
             int permNo = 0;
             permNo = r.Next(i1, i2);
