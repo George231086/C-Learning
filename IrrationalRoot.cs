@@ -47,8 +47,6 @@ namespace CSharpLearning
         /// fraction sequence will repeat. We return the sequence of integer parts to get the expansion.
         /// </remarks>
 
-
-
         public List<int> getCFExpansion()
         {
 
@@ -83,6 +81,7 @@ namespace CSharpLearning
         /// <summary>
         /// Print expansion in normal continued fraction notation, ie sqrt(n)=[a0;(a1,a2,..,ar)], () denotes repeating.
         /// </summary>
+        
         public void printCFExpansion()
         {
             var expansion = getCFExpansion();
@@ -267,6 +266,7 @@ namespace CSharpLearning
                     Console.WriteLine("The square root of " + num + " correct to " + decPlaces + " decimal places is given by " + root.getDecimalExp(decPlaces));
                     Console.WriteLine("A rational approximation correct to 10^(-" + (decPlaces + 1) + ") is given by");
                     root.printConvergent(decPlaces);
+                    
                 }
             }
         }
@@ -274,6 +274,4 @@ namespace CSharpLearning
     }
 
 }
-
-
 
