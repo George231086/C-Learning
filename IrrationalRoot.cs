@@ -49,8 +49,6 @@ namespace CSharpLearning
 
         public List<int> getCFExpansion()
         {
-
-
             var ints = new List<int>();
             var a0 = 1;
             var b0 = (int)Math.Sqrt(n);
@@ -168,8 +166,6 @@ namespace CSharpLearning
 
         public string getDecimalExp(int decPlaces)
         {
-
-
             var convergent = getConvergent(decPlaces);
             var p = convergent[0];
             var q = convergent[1];
@@ -223,14 +219,10 @@ namespace CSharpLearning
         {
             while (true)
             {
-
                 Console.WriteLine("Give me a positive number and I'll tell you about its square root! type q to quit.");
-
                 string input = Console.ReadLine();
-
                 if (input == "q")
                     break;
-
                 int num = validateAndParseInput(input);
                 if (num == -1)
                 {
@@ -266,12 +258,8 @@ namespace CSharpLearning
                     Console.WriteLine("The square root of " + num + " correct to " + decPlaces + " decimal places is given by " + root.getDecimalExp(decPlaces));
                     Console.WriteLine("A rational approximation correct to 10^(-" + (decPlaces + 1) + ") is given by");
                     root.printConvergent(decPlaces);
-                    
                 }
             }
         }
-
     }
-
 }
-
