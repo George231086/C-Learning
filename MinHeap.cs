@@ -7,7 +7,7 @@ namespace CSharpLearning
     /// <summary>
     /// Basic min heap using generics. A simple modification of the the max heap pseudocode
     /// in "Introduction to Algorithms", Cormen, Leiserson, Rivest and Stein. Includes static method to
-    /// heap sort an array.
+    /// heap sort an array (returns in descending order).
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class MinHeap<T> where T : IComparable
