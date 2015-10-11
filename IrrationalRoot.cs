@@ -9,12 +9,11 @@ namespace CSharpLearning
     ///<summary>
     /// A small program to make use of some functions that I'd written when solving Project Euler questions. The program asks
     /// for a positive number, then will give some information about its square root. For irrational roots
-    /// it will give its continued fraction expansion, its decimal expansion to a user provided degree of accuracy and a rational approximation. 
+    /// it will give its continued fraction expansion, its decimal expansion and a rational approximation. 
     ///</summary>
     ///
     ///<remarks>
-    /// It expects in32s as input. The program is mainly a bit of fun, so of course asking for a huge number of decimal places will lag.
-    /// For sqrt(2) it will comfortably return a 2000 or so.
+    /// It expects in32s as input. The program is mainly a bit of fun,
     ///</remarks>
 
     class IrrationalRoot
@@ -79,7 +78,7 @@ namespace CSharpLearning
         /// <summary>
         /// Print expansion in normal continued fraction notation, ie sqrt(n)=[a0;(a1,a2,..,ar)], () denotes repeating.
         /// </summary>
-        
+
         public void printCFExpansion()
         {
             var expansion = getCFExpansion();
@@ -193,72 +192,39 @@ namespace CSharpLearning
             return dec;
         }
 
-        public static int validateAndParseInput(string s)
-        {
-            try
-            {
-                var num = Int32.Parse(s);
-                if (num <= 0)
-                {
-                    return -1;
-                }
-                return num;
-            }
-            catch (FormatException e)
-            {
-                return -1;
-            }
-            catch (OverflowException e2)
-            {
-                return -1;
-            }
-        }
-
         public static void Main(string[] args)
         {
             while (true)
             {
-                Console.WriteLine("Give me a positive number and I'll tell you about its square root! type q to quit.");
+                Console.WriteLine("Enter a positive number, I'll tell you about its square root! type q to quit.");
                 string input = Console.ReadLine();
                 if (input == "q")
                     break;
-                int num = validateAndParseInput(input);
-                if (num == -1)
+                int num; 
+                var isInt = Int32.TryParse(input, out num);
+                if (isInt && num > 0)
                 {
-                    Console.WriteLine("Invalid input, either not a positive integer or too large!");
-                }
-                else if (Math.Sqrt(num) % 1 == 0)
-                {
-                    Console.WriteLine(num + " has square root " + (int)Math.Sqrt(num) + ". It is a perfect square!");
+                    if (Math.Sqrt(num) % 1 == 0)
+                    {
+                        Console.WriteLine("{0} has square root {1}. It is a perfect square!", num, (int)Math.Sqrt(num));
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} has an irrational square root.", num);
+                        var root = new IrrationalRoot(num);
+                        Console.WriteLine("Its continued fraction expansion is periodic, it is given by");
+                        root.printCFExpansion();
+                        var decPlaces = 20;
+                        Console.WriteLine("The square root of {0} correct to {1} decimal places is" +
+                        "given by {2}", num, decPlaces, root.getDecimalExp(decPlaces));
+                        Console.WriteLine("A rational approximation correct to at least {0} decimal places is given by", decPlaces);
+                        root.printConvergent(decPlaces);
+                    }
                 }
                 else
-                {
-                    Console.WriteLine(num + " has an irrational square root.");
-                    var root = new IrrationalRoot(num);
-                    Console.WriteLine("Its continued fraction expansion is periodic, it is given by");
-                    root.printCFExpansion();
-                    Console.WriteLine("Give me a number of decimal places!");
-                    var decInput = Console.ReadLine();
-                    int decPlaces = validateAndParseInput(decInput);
-                    var quit = false;
-                    while (decPlaces == -1)
-                    {
-                        Console.WriteLine("Not a positive integer! Try again. type q to quit");
-                        decInput = Console.ReadLine();
-                        if (decInput == "q")
-                        {
-                            quit = true;
-                            break;
-                        }
-                        decPlaces = validateAndParseInput(decInput);
-                    }
-                    if (quit)
-                        break;
-                    Console.WriteLine("The square root of " + num + " correct to " + decPlaces + " decimal places is given by " + root.getDecimalExp(decPlaces));
-                    Console.WriteLine("A rational approximation correct to 10^(-" + (decPlaces + 1) + ") is given by");
-                    root.printConvergent(decPlaces);
-                }
+                    Console.WriteLine("Invalid input, either not a positive integer or too large!");
             }
         }
     }
 }
+
