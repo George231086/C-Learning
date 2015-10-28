@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSharpLearning
+namespace TrainingTest
 {
     ///<summary>
     /// A small program to make use of some functions that I'd written when solving Project Euler questions. The program asks
@@ -22,9 +22,15 @@ namespace CSharpLearning
 
         public IrrationalRoot(int n)
         {
-            if (n <= 0 || Math.Sqrt(n) % 1 == 0)
+            if (n <= 0)
             {
-                throw new ArgumentException("Will not have real irrational root!");
+                throw new ArgumentException("Require positive input!");
+            }
+            
+            var intSqrt = (int)Math.Sqrt(n);
+            if (intSqrt * intSqrt == n)
+            {
+                throw new ArgumentException("input is a perfect square so will not have an irrational root!");
             }
             this.n = n;
         }
@@ -39,7 +45,7 @@ namespace CSharpLearning
         /// At each step we have an integer and a number of the form N = a0/(sqrt(n)-b0)
         /// which we need to expand. We consider 1/N and rewrite it in the form gamma+(sqrt(n)-a1)/b1.
         /// where gamma = integer part of 1/N. Then setting N2=(sqrt(n)-a1)/b1 we repeat the process
-        /// with 1/N2. I computed alpha and beta in terms of a0, bo, n and gamma, so at each step we need
+        /// with 1/N2. I computed alpha and beta in terms of a0, bo, n and gamma, so at each step we
         /// only need to compute gamma, ie taking an integer part, then a1 and b1 can be found by formulas.
         /// All the info we need is encoded in the gamma, a1 and b1 values.
         /// We store them in a list as a tuple, if they occur again we know the continued
@@ -52,7 +58,7 @@ namespace CSharpLearning
             var a0 = 1;
             var b0 = (int)Math.Sqrt(n);
             ints.Add(b0);
-            var nums = new List<Tuple<int, int, int>>();
+            var nums = new Dictionary<Tuple<int, int, int>,int>();
             for (int i = 0; ; i++)
             {
                 var num = a0 / (Math.Sqrt(n) - b0);
@@ -62,13 +68,13 @@ namespace CSharpLearning
                 var a1 = c0 / a0;
                 var b1 = ((gamma * c0 - b0 * a0) * a1) / c0;
                 var triple = new Tuple<int, int, int>(gamma, a1, b1);
-                if (nums.Contains(triple))
+                if (nums.ContainsKey(triple))
                 {
                     // We have seen this triple before, so routine will repeat.
                     return ints;
                 }
                 ints.Add(gamma);
-                nums.Add(triple);
+                nums.Add(triple,1);
                 // restart
                 a0 = a1;
                 b0 = b1;
@@ -134,7 +140,7 @@ namespace CSharpLearning
                 kNew = a * kNew + kOld;
                 kOld = tempk;
                 // Check whether we are close enough. Equivalent to |sqrt(n)-h/k|<1/(k(m+1)k(m))<1/10^(dpa+1)=0.000..001
-                if (kNew * kOld > BigInteger.Pow(10, decPlacesAccuracy + 1))
+                if (kNew * kOld > BigInteger.Pow(10, decPlacesAccuracy+2))
                 {
                     break;
                 }
@@ -160,7 +166,8 @@ namespace CSharpLearning
         /// 
         /// <remarks>
         /// We get a close enough convergent, then use long division to get the exact decimal expansion
-        /// of this convergent up to the required number of decimal places.
+        /// of this convergent up to the required number of decimal places. We truncate instead of round at
+        /// required number of dps.
         /// </remarks> 
 
         public string getDecimalExp(int decPlaces)
