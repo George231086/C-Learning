@@ -224,7 +224,7 @@ namespace CSharpLearning
                         var decPlaces = 20;
                         Console.WriteLine("The square root of {0} correct to {1} decimal places is" +
                         "given by {2}", num, decPlaces, root.getDecimalExp(decPlaces));
-                        Console.WriteLine("A rational approximation correct to at least {0} decimal places is given by", decPlaces);
+                        Console.WriteLine("A rational approximation within 10^-{0} is given by", decPlaces+2);
                         root.printConvergent(decPlaces);
                     }
                 }
