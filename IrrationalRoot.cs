@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TrainingTest
+namespace CSharpLearning
 {
     ///<summary>
     /// A small program to make use of some functions that I'd written when solving Project Euler questions. The program asks
